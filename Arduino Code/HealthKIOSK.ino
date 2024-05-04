@@ -10,7 +10,7 @@ boolean startflag = 0, continueflag = 0;
 const char* ssid = "realme9";
 const char* psk  = "amal@2001";
 
-IPAddress server(192, 168,240,126);
+IPAddress server(192,168,240,126);
 uint16_t server_port = 3306;
 
 char user[] = "health1_user";
@@ -55,7 +55,16 @@ float temperatureF = 0;
 
 void setup() {
   Serial.begin(9600);
-  
+  WiFi.begin(ssid, psk);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(300);
+  }
+  Serial.println();
+  Serial.print("Connected with IP: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
   if (!particleSensor.begin(Wire, I2C_SPEED_FAST)) { 
     Serial.println ("Sensor connection failure");
     while (1) {
